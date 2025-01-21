@@ -6,7 +6,7 @@ const Navbar = () => {
         <nav>
           <ul className="flex space-x-4">
             <li>
-              <a href="#" className="hover:text-blue-600">
+              <a href="/" className="hover:text-blue-600">
                 Home
               </a>
             </li>
@@ -18,6 +18,11 @@ const Navbar = () => {
             <li>
               <a href="#" className="hover:text-blue-600">
                 Contact
+              </a>
+            </li>
+            <li>
+              <a href="/blog/add" className="hover:text-blue-600">
+                Add Blog
               </a>
             </li>
           </ul>
