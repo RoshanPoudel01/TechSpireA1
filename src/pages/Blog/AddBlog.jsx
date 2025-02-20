@@ -4,35 +4,29 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import Footer from "../../Components/Footer";
 import Navbar from "../../Components/Navbar";
-const BlogForm = () => {
-  const defaultValues = {
-    title: "",
-    description: "",
-    image: "",
-  };
-  const schema = yup.object().shape({
-    title: yup.string().required("Title is Required"),
-    description: yup.string().required("Description is Required"),
-    image: yup
-      .mixed()
-      .test("Image Required", "Image is Required ", (value) => value),
+const AddBlog = () => {
+  const validationSchma = yup.object().shape({
+    title: yup.string().required("Title is required"),
+    description: yup.string().required("Description is required"),
+    image: yup.mixed().required(),
   });
   const [imagePreview, setImagePreview] = React.useState(null);
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
-    defaultValues,
-    resolver: yupResolver(schema),
+    resolver: yupResolver(validationSchma),
   });
-
-  const submitData = (data) => {
+  const submitData = (formData) => {
     console.log({
-      title: data.title,
-      description: data.description,
-      image: data.image[0] ? URL.createObjectURL(data.image[0]) : null,
+      title: formData.title,
+      description: formData.description,
+      image: formData.image[0] ? URL.createObjectURL(formData.image[0]) : null,
     });
+    reset();
+    setImagePreview(null);
   };
   return (
     <>
@@ -57,9 +51,7 @@ const BlogForm = () => {
               placeholder="Enter title"
               className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             />
-            <span className="text-red-500">
-              {errors.title && errors.title.message}
-            </span>
+            <span className="text-red-500">{errors.title?.message}</span>
           </div>
 
           <div>
@@ -77,9 +69,7 @@ const BlogForm = () => {
               rows="4"
               className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             ></textarea>
-            <span className="text-red-500">
-              {errors.description && errors.description.message}
-            </span>
+            <span className="text-red-500">{errors.description?.message}</span>
           </div>
 
           <div>
@@ -105,9 +95,7 @@ const BlogForm = () => {
               accept="image/*"
             />
             <img src={imagePreview} />
-            <span className="text-red-500">
-              {errors.image && errors.image.message}
-            </span>
+            <span className="text-red-500">{errors.image?.message}</span>
           </div>
 
           <div>
@@ -126,4 +114,4 @@ const BlogForm = () => {
   );
 };
 
-export default BlogForm;
+export default AddBlog;

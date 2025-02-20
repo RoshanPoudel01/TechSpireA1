@@ -1,7 +1,10 @@
-import React from "react";
+import { useParams, useSearchParams } from "react-router-dom";
 
 const BlogDetail = () => {
-  return <div>BlogDetail</div>;
+  const { id } = useParams();
+  const [searchParams] = useSearchParams();
+  console.log(searchParams.get("name"));
+  return <div>Blog Id:{id?.slice(3)}</div>;
 };
 
 export default BlogDetail;
